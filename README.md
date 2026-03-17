@@ -38,4 +38,4 @@ The project consists of **14 core files** organized into two primary modules:
 
  👥 Team Credits
 This project was a collaborative effort where I served as the Team Lead.
-Swamini Dhavane, Jyoti Koswal, Tanisha Gundecha, Aarya Ghogare, Shrawani Jamdade. 
+Jyoti Koswal, Tanisha Gundecha, Aarya Ghogare, Shrawani Jamdade, Swamini Dhavane

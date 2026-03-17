@@ -1,1 +1,56 @@
+{
+  "manifest_version": 3,
+  "name": "Chaukas AI — UPI Fraud Protection",
+  "version": "1.0",
+  "description": "Real-time behavioral fraud detection for UPI payments",
 
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "notifications"
+  ],
+
+  "host_permissions": [
+    "file:///*",
+    "http://localhost/*",
+     "http://127.0.0.1/*",
+  "http://127.0.0.1:5500/*",
+    "https://*.phonepe.com/*",
+    "https://*.gpay.app/*"
+  ],
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "file:///*",
+        "http://localhost/*",
+         "http://127.0.0.1/*",
+  "http://127.0.0.1:5500/*",
+        "https://*.phonepe.com/*",
+        "https://*.gpay.app/*"
+      ],
+      "js": ["content_script.js"],
+      "run_at": "document_end"
+    }
+  ],
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16":  "icon.png",
+      "48":  "icon.png",
+      "128": "icon.png"
+    }
+  },
+
+  "icons": {
+    "16":  "icon.png",
+    "48":  "icon.png",
+    "128": "icon.png"
+  }
+}

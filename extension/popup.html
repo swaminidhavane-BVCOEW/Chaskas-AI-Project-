@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Chaukas AI</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap');
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Outfit', 'Segoe UI', sans-serif;
+      width: 300px;
+      background: #F8FAFF;
+      color: #0F172A;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #2D5BE3, #4F7AFF);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .shield { font-size: 32px; }
+    .header-text h2 { font-size: 16px; font-weight: 800; color: white; }
+    .header-text p  { font-size: 11px; color: rgba(255,255,255,0.75); margin-top: 2px; }
+
+    .status-bar {
+      margin: 16px;
+      background: white;
+      border: 1.5px solid #E2E8F0;
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .status-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #00C896;
+      box-shadow: 0 0 0 3px rgba(0,200,150,0.2);
+      flex-shrink: 0;
+    }
+    .status-dot.learning { background: #F59E0B; box-shadow: 0 0 0 3px rgba(245,158,11,0.2); }
+    .status-text { font-size: 13px; font-weight: 600; color: #0F172A; }
+    .status-sub  { font-size: 11px; color: #94A3B8; margin-top: 2px; }
+
+    .stats {
+      margin: 0 16px 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .stat-card {
+      background: white;
+      border: 1.5px solid #E2E8F0;
+      border-radius: 10px;
+      padding: 12px;
+    }
+    .stat-value { font-size: 22px; font-weight: 800; color: #2D5BE3; }
+    .stat-label { font-size: 11px; color: #94A3B8; margin-top: 2px; font-weight: 600; }
+
+    .footer {
+      margin: 0 16px 16px;
+      font-size: 11px;
+      color: #94A3B8;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .reset-btn {
+      display: block;
+      width: calc(100% - 32px);
+      margin: 0 16px 16px;
+      padding: 10px;
+      background: #FEF2F2;
+      border: 1.5px solid #FECACA;
+      border-radius: 10px;
+      color: #DC2626;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .reset-btn:hover { background: #FEE2E2; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="shield">🛡️</div>
+    <div class="header-text">
+      <h2>Chaukas AI</h2>
+      <p>Behavioral Fraud Protection</p>
+    </div>
+  </div>
+
+  <div class="status-bar">
+    <div class="status-dot" id="status-dot"></div>
+    <div>
+      <div class="status-text" id="status-text">Active & Protecting</div>
+      <div class="status-sub"  id="status-sub">Monitoring your behavior</div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat-card">
+      <div class="stat-value" id="sessions">0</div>
+      <div class="stat-label">Sessions Learned</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="blocked" style="color:#EF4444;">0</div>
+      <div class="stat-label">Threats Blocked</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="avg-type">—</div>
+      <div class="stat-label">Avg Typing (ms)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="avg-mouse">—</div>
+      <div class="stat-label">Avg Mouse Speed</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Zero personal data transmitted · All processing on-device<br/>
+    DPDP Act 2023 Compliant
+  </div>
+
+  <button class="reset-btn" id="reset-btn">Reset Behavioral Profile</button>
+
+  <script src="popup.js"></script>
+</body>
+</html>

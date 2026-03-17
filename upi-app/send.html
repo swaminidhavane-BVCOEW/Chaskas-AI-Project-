@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chaukas Pay — Send Money</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div class="phone">
+  <div class="status-bar">
+    <span>9:41</span>
+    <span>SBI ●●●●● 5G</span>
+  </div>
+
+  <div class="page-header">
+    <a class="back-btn" href="dashboard.html">←</a>
+    <div class="page-title">Send Money</div>
+  </div>
+
+  <div class="content">
+
+    <!-- Quick contacts -->
+    <div class="section-title">Recent Contacts</div>
+    <div style="display:flex;gap:14px;margin-bottom:24px;overflow-x:auto;padding-bottom:4px;">
+      <div onclick="fillContact('Rahul Sharma','rahul@sbi')" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;flex-shrink:0;">
+        <div style="width:52px;height:52px;border-radius:16px;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;border:2px solid #E0E7FF;">R</div>
+        <div style="font-size:11px;font-weight:600;color:var(--text-2);">Rahul</div>
+      </div>
+      <div onclick="fillContact('Priya Singh','priya@hdfc')" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;flex-shrink:0;">
+        <div style="width:52px;height:52px;border-radius:16px;background:#FDF4FF;color:#9333EA;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;border:2px solid #F3E8FF;">P</div>
+        <div style="font-size:11px;font-weight:600;color:var(--text-2);">Priya</div>
+      </div>
+      <div onclick="fillContact('Swiggy','swiggy@icici')" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;flex-shrink:0;">
+        <div style="width:52px;height:52px;border-radius:16px;background:#FFF7ED;color:#C2410C;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;border:2px solid #FED7AA;">S</div>
+        <div style="font-size:11px;font-weight:600;color:var(--text-2);">Swiggy</div>
+      </div>
+      <div onclick="fillContact('Amazon Pay','amazon@apl')" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;flex-shrink:0;">
+        <div style="width:52px;height:52px;border-radius:16px;background:#F0FDF4;color:#16A34A;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;border:2px solid #BBF7D0;">A</div>
+        <div style="font-size:11px;font-weight:600;color:var(--text-2);">Amazon</div>
+      </div>
+    </div>
+
+    <div class="section-title">Payment Details</div>
+
+    <div class="form-group">
+      <label class="form-label">Receiver Name</label>
+      <input class="form-input" type="text" placeholder="Enter name" id="receiver"/>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">UPI ID / Account Number</label>
+      <input class="form-input" type="text" placeholder="name@bank or account number" id="upi_id"/>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Amount (₹)</label>
+      <input class="form-input" type="number" placeholder="0.00" id="amount" style="font-size:22px;font-weight:700;"/>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Purpose</label>
+      <select class="form-input" id="purpose">
+        <option>Payment</option>
+        <option>Rent</option>
+        <option>Food</option>
+        <option>Shopping</option>
+        <option>Transfer</option>
+        <option>Bill Payment</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Note (Optional)</label>
+      <input class="form-input" type="text" placeholder="Add a note..." id="note"/>
+    </div>
+
+    <button class="btn btn-primary" onclick="goConfirm()">
+      Review Payment →
+    </button>
+
+    <p style="text-align:center;font-size:12px;color:var(--text-3);margin-top:14px;">
+      Protected by Chaukas AI Behavioral Analysis
+    </p>
+  </div>
+
+  <nav class="bottom-nav">
+    <a class="nav-item" href="dashboard.html">
+      <div class="nav-icon">⊞</div><div class="nav-label">Home</div>
+    </a>
+    <a class="nav-item active" href="send.html">
+      <div class="nav-icon">↗</div><div class="nav-label">Send</div>
+    </a>
+    <a class="nav-item" href="history.html">
+      <div class="nav-icon">📋</div><div class="nav-label">History</div>
+    </a>
+    <a class="nav-item" href="#">
+      <div class="nav-icon">⚙</div><div class="nav-label">Settings</div>
+    </a>
+  </nav>
+</div>
+
+<script>
+  function fillContact(name, upi) {
+    document.getElementById('receiver').value = name;
+    document.getElementById('upi_id').value   = upi;
+  }
+  function goConfirm() {
+    const r = document.getElementById('receiver').value;
+    const u = document.getElementById('upi_id').value;
+    const a = document.getElementById('amount').value;
+    const p = document.getElementById('purpose').value;
+    const n = document.getElementById('note').value;
+    if (!r || !u || !a) { alert('Please fill Receiver, UPI ID and Amount'); return; }
+    // store in sessionStorage for confirm page
+    sessionStorage.setItem('txn', JSON.stringify({ receiver:r, upi:u, amount:a, purpose:p, note:n }));
+    window.location.href = 'confirm.html';
+  }
+</script>
+</body>
+</html>

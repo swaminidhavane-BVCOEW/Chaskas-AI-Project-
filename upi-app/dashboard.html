@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chaukas Pay — Dashboard</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div class="phone">
+  <div class="status-bar">
+    <span>9:41</span>
+    <span>SBI ●●●●● 5G</span>
+  </div>
+
+  <div class="app-header">
+    <div class="logo">C</div>
+    <div>
+      <div class="app-name">Chaukas<span>Pay</span></div>
+      <div style="font-size:11px;color:var(--text-3);">Good morning, Arjun</div>
+    </div>
+    <div class="shield-badge">
+      <span>●</span> Protected
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- Balance Card -->
+    <div class="balance-card fade-up">
+      <div class="balance-label">Total Balance</div>
+      <div class="balance-amount">₹20,000.00</div>
+      <div class="balance-row">
+        <div class="balance-acct">SBI •••• 4821</div>
+        <div class="balance-bank">State Bank of India</div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions fade-up delay-1">
+      <a class="qa-btn" href="send.html">
+        <div class="qa-icon">↗</div>
+        <div class="qa-label">Send Money</div>
+      </a>
+      <a class="qa-btn" href="#">
+        <div class="qa-icon">↙</div>
+        <div class="qa-label">Request</div>
+      </a>
+      <a class="qa-btn" href="history.html">
+        <div class="qa-icon">📋</div>
+        <div class="qa-label">History</div>
+      </a>
+      <a class="qa-btn" href="#">
+        <div class="qa-icon">⋯</div>
+        <div class="qa-label">More</div>
+      </a>
+    </div>
+
+    <!-- Security Status -->
+    <div class="alert-badge success fade-up delay-2">
+      <span style="font-size:18px;">🛡️</span>
+      <span>Chaukas AI is actively protecting your account</span>
+    </div>
+
+    <!-- Recent Transactions -->
+    <div class="section-title fade-up delay-3">
+      Recent Transactions
+      <a href="history.html">See all</a>
+    </div>
+
+    <div class="txn-list fade-up delay-4">
+      <a class="txn-item" href="history.html">
+        <div class="txn-avatar" style="background:#EEF2FF;color:#4F46E5;">R</div>
+        <div class="txn-info">
+          <div class="txn-name">Rahul Sharma</div>
+          <div class="txn-date">Today, 9:42 AM</div>
+        </div>
+        <div class="txn-amount debit">- ₹1,200</div>
+      </a>
+
+      <a class="txn-item" href="history.html">
+        <div class="txn-avatar" style="background:#FFF7ED;color:#C2410C;">S</div>
+        <div class="txn-info">
+          <div class="txn-name">Swiggy</div>
+          <div class="txn-date">Yesterday, 8:10 PM</div>
+        </div>
+        <div class="txn-amount debit">- ₹450</div>
+      </a>
+
+      <a class="txn-item" href="history.html">
+        <div class="txn-avatar" style="background:#F0FDF4;color:#16A34A;">A</div>
+        <div class="txn-info">
+          <div class="txn-name">Amazon Pay</div>
+          <div class="txn-date">Yesterday, 11:30 AM</div>
+        </div>
+        <div class="txn-amount debit">- ₹3,499</div>
+      </a>
+
+      <a class="txn-item" href="history.html">
+        <div class="txn-avatar" style="background:#FFF1F2;color:#E11D48;">⚠</div>
+        <div class="txn-info">
+          <div class="txn-name">Unknown #4821</div>
+          <div class="txn-date">2 days ago — BLOCKED</div>
+        </div>
+        <div class="txn-amount" style="color:var(--red);">₹25,000</div>
+      </a>
+    </div>
+
+  </div><!-- /content -->
+
+  <nav class="bottom-nav">
+    <a class="nav-item active" href="dashboard.html">
+      <div class="nav-icon">⊞</div>
+      <div class="nav-label">Home</div>
+    </a>
+    <a class="nav-item" href="send.html">
+      <div class="nav-icon">↗</div>
+      <div class="nav-label">Send</div>
+    </a>
+    <a class="nav-item" href="history.html">
+      <div class="nav-icon">📋</div>
+      <div class="nav-label">History</div>
+    </a>
+    <a class="nav-item" href="#">
+      <div class="nav-icon">⚙</div>
+      <div class="nav-label">Settings</div>
+    </a>
+  </nav>
+</div>
+</body>
+</html>

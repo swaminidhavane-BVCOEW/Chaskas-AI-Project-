@@ -1,1 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chaukas Pay — Login</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div class="phone">
+  <div class="status-bar">
+    <span>9:41</span>
+    <span>SBI ●●●●● 5G</span>
+  </div>
 
+  <div class="login-hero">
+    <div class="login-logo">🛡️</div>
+    <div class="login-title">Chaukas<span style="opacity:0.8">Pay</span></div>
+    <div class="login-sub">Protected by Behavioral AI</div>
+  </div>
+
+  <div class="login-form">
+    <div class="form-group">
+      <label class="form-label">Mobile Number</label>
+      <input class="form-input" type="tel" placeholder="Enter your mobile number"
+             id="mobile" maxlength="10"/>
+    </div>
+
+    <div style="margin-bottom:8px;">
+      <label class="form-label">Enter PIN</label>
+      <div class="pin-dots">
+        <div class="pin-dot" id="d1"></div>
+        <div class="pin-dot" id="d2"></div>
+        <div class="pin-dot" id="d3"></div>
+        <div class="pin-dot" id="d4"></div>
+        <div class="pin-dot" id="d5"></div>
+        <div class="pin-dot" id="d6"></div>
+      </div>
+    </div>
+
+    <div class="numpad">
+      <button class="num-btn" onclick="pressNum('1')">1</button>
+      <button class="num-btn" onclick="pressNum('2')">2</button>
+      <button class="num-btn" onclick="pressNum('3')">3</button>
+      <button class="num-btn" onclick="pressNum('4')">4</button>
+      <button class="num-btn" onclick="pressNum('5')">5</button>
+      <button class="num-btn" onclick="pressNum('6')">6</button>
+      <button class="num-btn" onclick="pressNum('7')">7</button>
+      <button class="num-btn" onclick="pressNum('8')">8</button>
+      <button class="num-btn" onclick="pressNum('9')">9</button>
+      <button class="num-btn" onclick="clearPin()" style="font-size:14px;">Clear</button>
+      <button class="num-btn" onclick="pressNum('0')">0</button>
+      <button class="num-btn btn-primary" onclick="doLogin()" style="font-size:14px;">Go</button>
+    </div>
+
+    <p style="text-align:center;font-size:12px;color:var(--text-3);margin-top:20px;">
+      Demo PIN: any 6 digits
+    </p>
+  </div>
+</div>
+
+<script>
+  let pin = '';
+  function pressNum(n) {
+    if (pin.length >= 6) return;
+    pin += n;
+    updateDots();
+    if (pin.length === 6) setTimeout(doLogin, 300);
+  }
+  function clearPin() { pin = pin.slice(0,-1); updateDots(); }
+  function updateDots() {
+    for (let i = 1; i <= 6; i++) {
+      document.getElementById('d'+i).classList.toggle('filled', i <= pin.length);
+    }
+  }
+  function doLogin() {
+    if (pin.length < 4) { alert('Enter at least 4 digits'); return; }
+    window.location.href = 'dashboard.html';
+  }
+</script>
+</body>
+</html>

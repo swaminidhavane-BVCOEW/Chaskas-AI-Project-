@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chaukas Pay — Confirm Payment</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div class="phone">
+  <div class="status-bar">
+    <span>9:41</span>
+    <span>SBI ●●●●● 5G</span>
+  </div>
+
+  <div class="page-header">
+    <a class="back-btn" href="send.html">←</a>
+    <div class="page-title">Confirm Payment</div>
+  </div>
+
+  <div class="content">
+
+    <div class="confirm-card fade-up">
+      <div class="confirm-amount">
+        <div class="big" id="disp-amount">₹0</div>
+        <div class="sub">You are about to send</div>
+      </div>
+      <div class="confirm-row">
+        <span class="label">To</span>
+        <span class="value" id="disp-receiver">—</span>
+      </div>
+      <div class="confirm-row">
+        <span class="label">UPI ID</span>
+        <span class="value" id="disp-upi" style="font-family:'JetBrains Mono',monospace;font-size:12px;">—</span>
+      </div>
+      <div class="confirm-row">
+        <span class="label">Purpose</span>
+        <span class="value" id="disp-purpose">—</span>
+      </div>
+      <div class="confirm-row">
+        <span class="label">From</span>
+        <span class="value">SBI •••• 4821</span>
+      </div>
+      <div class="confirm-row">
+        <span class="label">Time</span>
+        <span class="value" id="disp-time">—</span>
+      </div>
+    </div>
+
+    <!-- AI Shield status -->
+    <div class="alert-badge success fade-up delay-1" id="ai-status">
+      <span style="font-size:16px;">🛡️</span>
+      <span>Chaukas AI is analyzing this transaction...</span>
+    </div>
+
+    <div class="form-group fade-up delay-2">
+      <label class="form-label">Enter UPI PIN to Pay</label>
+      <input class="form-input" type="password" placeholder="Enter 6-digit UPI PIN"
+             id="upi-pin" maxlength="6" style="letter-spacing:8px;font-size:20px;text-align:center;"/>
+    </div>
+
+    <button class="btn btn-primary fade-up delay-3" id="pay-btn" onclick="doPay()">
+      Pay Now
+    </button>
+
+    <button class="btn btn-ghost fade-up delay-4" onclick="window.location.href='send.html'"
+            style="margin-top:10px;">
+      Cancel
+    </button>
+  </div>
+</div>
+
+<script>
+  // load txn from sessionStorage
+  const txn = JSON.parse(sessionStorage.getItem('txn') || '{}');
+  document.getElementById('disp-amount').textContent  = '₹' + Number(txn.amount||0).toLocaleString('en-IN');
+  document.getElementById('disp-receiver').textContent = txn.receiver || '—';
+  document.getElementById('disp-upi').textContent      = txn.upi || '—';
+  document.getElementById('disp-purpose').textContent  = txn.purpose || '—';
+  const now = new Date();
+  document.getElementById('disp-time').textContent =
+    now.toLocaleTimeString('en-IN', {hour:'2-digit', minute:'2-digit'});
+
+  function doPay() {
+    const pin = document.getElementById('upi-pin').value;
+    if (pin.length < 4) { alert('Enter your UPI PIN'); return; }
+    // Extension will intercept here — for now go to success
+    document.getElementById('pay-btn').textContent = 'Processing...';
+    document.getElementById('pay-btn').disabled = true;
+    setTimeout(() => { window.location.href = 'success.html'; }, 1800);
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chaukas AI — Trusted Device</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap');
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Outfit',sans-serif;background:#0F172A;min-height:100vh;color:white;padding:20px;}
+    .header{display:flex;align-items:center;gap:12px;padding:16px 0 24px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:24px;}
+    .logo{width:44px;height:44px;background:linear-gradient(135deg,#3B82F6,#6366F1);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;}
+    .header-text h1{font-size:18px;font-weight:800;}
+    .header-text p{font-size:12px;color:#64748B;}
+    .status-bar{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:12px 16px;margin-bottom:20px;font-size:13px;}
+    .dot{width:10px;height:10px;border-radius:50%;background:#22C55E;box-shadow:0 0 0 3px rgba(34,197,94,0.2);animation:pulse 2s infinite;flex-shrink:0;}
+    .dot.alert{background:#EF4444;box-shadow:0 0 0 3px rgba(239,68,68,0.3);}
+    @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.5;}}
+    .waiting{text-align:center;padding:48px 20px;}
+    .waiting .big-icon{font-size:64px;margin-bottom:16px;}
+    .waiting h2{font-size:18px;font-weight:700;margin-bottom:8px;}
+    .waiting p{font-size:13px;color:#64748B;line-height:1.6;}
+    .alert-card{display:none;background:#1E293B;border:1.5px solid #EF4444;border-radius:20px;overflow:hidden;animation:slideIn 0.4s ease;}
+    @keyframes slideIn{from{transform:translateY(-20px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+    .alert-header{background:#EF4444;padding:16px 20px;}
+    .alert-header h2{font-size:16px;font-weight:800;}
+    .alert-header p{font-size:11px;opacity:0.85;margin-top:2px;}
+    .alert-body{padding:20px;}
+    .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+    .info-item{background:rgba(255,255,255,0.05);border-radius:10px;padding:12px;}
+    .info-item .lbl{font-size:10px;color:#64748B;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;}
+    .info-item .val{font-size:16px;font-weight:800;}
+    .val-red{color:#EF4444;} .val-orange{color:#F59E0B;} .val-green{color:#22C55E;}
+    .reason-box{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:12px;padding:14px;font-size:13px;color:#FCA5A5;line-height:1.6;margin-bottom:20px;}
+    .reason-box strong{color:white;display:block;margin-bottom:6px;}
+    .btn{width:100%;padding:16px;border:none;border-radius:14px;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;margin-bottom:10px;transition:transform 0.15s;}
+    .btn:active{transform:scale(0.97);}
+    .btn-block{background:#EF4444;color:white;}
+    .btn-approve{background:#22C55E;color:white;}
+    .result-card{display:none;text-align:center;padding:32px 20px;background:#1E293B;border-radius:20px;}
+    .result-card .ico{font-size:56px;margin-bottom:12px;}
+    .result-card h2{font-size:20px;font-weight:800;margin-bottom:8px;}
+    .result-card p{font-size:13px;color:#64748B;line-height:1.6;}
+    .scan-btn{width:100%;padding:14px;background:rgba(59,130,246,0.15);border:1.5px solid #3B82F6;border-radius:14px;color:#93C5FD;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:16px;}
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">🛡️</div>
+  <div class="header-text">
+    <h1>Chaukas AI</h1>
+    <p>Trusted Device Monitor</p>
+  </div>
+</div>
+
+<div class="status-bar">
+  <div class="dot" id="status-dot"></div>
+  <span id="status-text">Monitoring for suspicious transactions...</span>
+</div>
+
+<!-- Waiting state -->
+<div class="waiting" id="waiting-view">
+  <div class="big-icon">👁️</div>
+  <h2>Watching silently</h2>
+  <p>This device is your trusted guardian.<br/>If a suspicious transaction is detected on another device, it will appear here instantly.</p>
+  <button class="scan-btn" onclick="checkNow()">Check for alerts now</button>
+</div>
+
+<!-- Alert card -->
+<div class="alert-card" id="alert-card">
+  <div class="alert-header">
+    <h2>🚨 Suspicious Transaction Detected</h2>
+    <p>A payment on your other device needs your decision</p>
+  </div>
+  <div class="alert-body">
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="lbl">Amount</div>
+        <div class="val val-red" id="a-amount">—</div>
+      </div>
+      <div class="info-item">
+        <div class="lbl">Risk Score</div>
+        <div class="val val-red" id="a-score">—</div>
+      </div>
+      <div class="info-item">
+        <div class="lbl">Verdict</div>
+        <div class="val val-orange" id="a-verdict">—</div>
+      </div>
+      <div class="info-item">
+        <div class="lbl">Time</div>
+        <div class="val" id="a-time" style="font-size:13px;">—</div>
+      </div>
+    </div>
+    <div class="reason-box">
+      <strong>Why Chaukas AI flagged this:</strong>
+      <span id="a-reason">—</span>
+    </div>
+    <button class="btn btn-block"   onclick="decide('BLOCKED')">🚫 Report Fraud &amp; Block</button>
+    <button class="btn btn-approve" onclick="decide('AUTHORIZED')">✅ This was me — Authorize</button>
+  </div>
+</div>
+
+<!-- Result card -->
+<div class="result-card" id="result-card">
+  <div class="ico" id="r-icon">—</div>
+  <h2 id="r-title">—</h2>
+  <p id="r-msg">—</p>
+  <button class="scan-btn" onclick="resetMonitor()" style="margin-top:20px;">Monitor for next alert</button>
+</div>
+
+<script>
+  const FB_URL = 'https://chaukas-ai-default-rtdb.firebaseio.com';
+  let currentTxnId = null;
+  let pollInterval = null;
+
+  // Start polling on load
+  startPolling();
+
+  function startPolling() {
+    pollInterval = setInterval(checkNow, 3000);
+  }
+
+  async function checkNow() {
+    try {
+      // Get all pending transactions
+      const res  = await fetch(FB_URL + '/transactions.json');
+      const data = await res.json();
+      if (!data) return;
+
+      // Find the most recent PENDING transaction
+      const txnIds = Object.keys(data);
+      let latestPending = null;
+      let latestTime    = 0;
+
+      for (const id of txnIds) {
+        const txn = data[id];
+        if (txn.status === 'PENDING') {
+          const t = new Date(txn.time).getTime();
+          if (t > latestTime) {
+            latestTime    = t;
+            latestPending = { id, ...txn };
+          }
+        }
+      }
+
+      if (latestPending && latestPending.id !== currentTxnId) {
+        currentTxnId = latestPending.id;
+        showAlert(latestPending);
+      }
+
+    } catch(e) {
+      console.log('Poll error:', e.message);
+    }
+  }
+
+  function showAlert(txn) {
+    // Update status dot
+    document.getElementById('status-dot').classList.add('alert');
+    document.getElementById('status-text').textContent = 'ALERT — Action required!';
+
+    // Fill in details
+    document.getElementById('a-amount').textContent  = 'Rs.' + (txn.amount || '?');
+    document.getElementById('a-score').textContent   = (txn.riskScore || '?') + '%';
+    document.getElementById('a-verdict').textContent = txn.verdict || '?';
+    document.getElementById('a-reason').textContent  = txn.reason  || '?';
+    document.getElementById('a-time').textContent    = new Date(txn.time).toLocaleTimeString('en-IN');
+
+    // Color score
+    const score = txn.riskScore || 0;
+    const scoreEl = document.getElementById('a-score');
+    scoreEl.className = 'val ' + (score >= 56 ? 'val-red' : score >= 35 ? 'val-orange' : 'val-green');
+
+    // Show alert, hide waiting
+    document.getElementById('waiting-view').style.display = 'none';
+    document.getElementById('alert-card').style.display   = 'block';
+
+    // Vibrate if supported
+    if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+  }
+
+  async function decide(action) {
+  if (!currentTxnId) return;
+
+  // Show loading immediately so user doesn't double click
+  const blockBtn   = document.querySelector('.btn-block');
+  const approveBtn = document.querySelector('.btn-approve');
+  blockBtn.disabled   = true;
+  approveBtn.disabled = true;
+  blockBtn.style.opacity   = '0.5';
+  approveBtn.style.opacity = '0.5';
+
+  if (action === 'BLOCKED') {
+    blockBtn.textContent = 'Blocking...';
+  } else {
+    approveBtn.textContent = 'Authorizing...';
+  }
+
+  try {
+    const res = await fetch(FB_URL + '/transactions/' + currentTxnId + '/status.json', {
+      method:  'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(action),
+    });
+
+    if (res.ok) {
+      showResult(action);
+    } else {
+      throw new Error('Firebase write failed');
+    }
+
+  } catch(e) {
+    // Re-enable buttons if it fails
+    blockBtn.disabled        = false;
+    approveBtn.disabled      = false;
+    blockBtn.style.opacity   = '1';
+    approveBtn.style.opacity = '1';
+    blockBtn.textContent     = '🚫 Report Fraud & Block';
+    approveBtn.textContent   = '✅ This was me — Authorize';
+    alert('Connection issue — please try again');
+  }
+}
+  function showResult(action) {
+    document.getElementById('alert-card').style.display  = 'none';
+    document.getElementById('result-card').style.display = 'block';
+
+    if (action === 'AUTHORIZED') {
+      document.getElementById('r-icon').textContent  = '✅';
+      document.getElementById('r-title').textContent = 'Payment Authorized';
+      document.getElementById('r-msg').textContent   = 'The transaction will proceed on the other device. Decision sent successfully.';
+    } else {
+      document.getElementById('r-icon').textContent  = '🚫';
+      document.getElementById('r-title').textContent = 'Payment Blocked';
+      document.getElementById('r-msg').textContent   = 'The transaction has been cancelled on the other device. Stay safe.';
+    }
+
+    // Reset dot
+    document.getElementById('status-dot').classList.remove('alert');
+    document.getElementById('status-text').textContent = 'Decision sent — monitoring resumed';
+  }
+
+  function resetMonitor() {
+    currentTxnId = null;
+    document.getElementById('result-card').style.display  = 'none';
+    document.getElementById('waiting-view').style.display = 'block';
+    document.getElementById('status-text').textContent    = 'Monitoring for suspicious transactions...';
+  }
+</script>
+
+</body>
+</html>

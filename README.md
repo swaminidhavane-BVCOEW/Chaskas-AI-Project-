@@ -1,6 +1,6 @@
 Chaukas AI — UPI Fraud Protection Ecosystem 
 
- Live link: https://swaminidhavane-bvcoew.github.io/Chaukas-AI-Project-/upi-app/index.html
+[🚀 Click here for Live Demo](https://swaminidhavane-bvcoew.github.io/Chaukas-AI-Project-/upi-app/index.html)
 
 Chaukas AI is a dual-layered security system designed to detect and prevent UPI transaction fraud in real-time. By combining Behavioral Biometrics with Gemini AI the system creates a unique security profile for users to distinguish between legitimate owners and unauthorized actors.
 
